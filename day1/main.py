@@ -1,11 +1,11 @@
 import re 
 
+
 def read_input(path):
     return open(path, "r").read().strip().split("\n")
 
-def solve1(input):
-    lines = read_input(input)
 
+def calibrate(lines):
     calibration = []
     for line in lines:
         matches = re.findall("\d", line)
@@ -13,35 +13,29 @@ def solve1(input):
 
     return sum(calibration)
 
-def solve2(input):
-    numbers = {
-        "one": 1,
-        "two": 2,
-        "three": 3,
-        "four": 4,
-        "five": 5,
-        "six": 6,
-        "seven": 7,
-        "eight": 8,
-        "nine": 9,
-    }
 
+def solve1(input):
+    lines = read_input(input)
+    return calibrate(lines)
+
+
+def solve2(input):
     lines = read_input(input)
 
-    reverse_numbers = [number[::-1] for number in numbers.keys()]
-
-    calibration = []
+    new_lines = []
     for line in lines:
-        matches_left = re.findall(f"{'|'.join(numbers.keys())}|\d", line)
-        matches_right = re.findall(f"{'|'.join(reverse_numbers)}|\d", line[::-1])
+        line = line.replace("one", "o1ne")
+        line = line.replace("two", "t2wo")
+        line = line.replace("three", "t3hree")
+        line = line.replace("four", "f4our")
+        line = line.replace("five", "f5ive")
+        line = line.replace("six", "s6ix")
+        line = line.replace("seven", "s7even")
+        line = line.replace("eight", "e8ight")
+        line = line.replace("nine", "n9ine")
+        new_lines.append(line)
 
-        calibration_left = numbers[matches_left[0]] if matches_left[0] in numbers.keys() else matches_left[0]
-
-        calibration_right = numbers[matches_right[0][::-1]] if matches_right[0] in reverse_numbers else matches_right[0]
-
-        calibration.append(int(f"{calibration_left}{calibration_right}"))
-    
-    return sum(calibration)
+    return calibrate(new_lines)
 
 
 print(solve1("input"))
