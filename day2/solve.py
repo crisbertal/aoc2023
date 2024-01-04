@@ -28,6 +28,15 @@ def solve1(input):
 
     return sum(valid_games)
 
+def solve2(input):
+    file = read_input(input)
+    power = 0
+    for game in file:
+        max_blue = max([int(match.replace(" blue", "")) for match in re.findall("\d+[\s]blue", game)])
+        max_red = max([int(match.replace(" red", "")) for match in re.findall("\d+[\s]red", game)])
+        max_green = max([int(match.replace(" green", "")) for match in re.findall("\d+[\s]green", game)])
+        power += max_blue * max_red * max_green
+    return power
 
-
-print(solve0("input"))
+print(solve1("input"))
+print(solve2("input"))
