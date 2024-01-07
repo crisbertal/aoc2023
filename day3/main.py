@@ -1,5 +1,6 @@
+from collections import defaultdict
 
-file = open("input", "r").read().strip().split("\n")
+file = open("test_input", "r").read().strip().split("\n")
 
 GRID = [[symbol for symbol in line] for line in file]
 ROWS = len(GRID)
@@ -31,7 +32,7 @@ def solve1():
 
 def solve2():
     # multiply common symbol position
-    gear_symbol_values = {}
+    gear_symbol_values = defaultdict(list)
     res = 0
     for row in range(ROWS):
         n = 0
@@ -50,13 +51,9 @@ def solve2():
 
             else:
                 if has_part:
-                    if len(gear_symbol_values) == 0 or gear_position not in gear_symbol_values.keys():
-                        gear_symbol_values[gear_position] = [n]
-                    else:
-                        gear_symbol_values[gear_position].append(n)
+                    gear_symbol_values[gear_position].append(n)
                     has_part = False
                     gear_position = []
-                    print(gear_symbol_values)
                 n = 0
 
     for _, values in gear_symbol_values.items():
